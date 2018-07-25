@@ -1,11 +1,15 @@
 # ActionCable Car Status Practice App
 
-Update the car status via the Rails Console and the status will appear on the Cars index via jQuery.
+Update the car status via the Rails Console and the status will appear on the Cars index via jQuery. Check out [this medium post](https://medium.com/rubyinside/action-cable-hello-world-with-rails-5-1-efc475b0208b) for a great tutorial.
 
 * Ruby 2.5.0
 * Rails ~> 5.0.1
 * Postgres ~> 0.18
 * Redis 3.3.1
+
+## What it looks like
+
+![alt text](/public/screenshots/cars_index1.png "Screenshot")
 
 
 ## Getting Started
