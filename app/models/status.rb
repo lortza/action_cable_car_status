@@ -2,6 +2,10 @@ class Status < ApplicationRecord
   has_many :cars
 
   def display
-    "#{number}: #{name.titleize}"
+    "#{name.titleize}"
+  end
+
+  def with_id
+    "#{id}: #{name.titleize}"
   end
 end

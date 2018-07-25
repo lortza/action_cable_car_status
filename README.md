@@ -1,24 +1,34 @@
-# README
+# ActionCable Car Status Practice App
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Update the car status via the Rails Console and the status will appear on the Cars index via jQuery.
 
-Things you may want to cover:
+* Ruby 2.5.0
+* Rails ~> 5.0.1
+* Postgres ~> 0.18
+* Redis 3.3.1
 
-* Ruby version
 
-* System dependencies
+## Getting Started
 
-* Configuration
+1. Start all of the services in separate terminal windows/tabs.
 
-* Database creation
+```ruby
+#redis
+redis-server
 
-* Database initialization
+# rails server
+rails server
 
-* How to run the test suite
+# rails console
+rails console
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+2. Go to `localhost:3000`
 
-* Deployment instructions
+3. Update a car's status in the console and see the `cars#index` view change
 
-* ...
+```ruby
+# rails console
+
+Car.first.update!(status_id: Status.first.id)
+```

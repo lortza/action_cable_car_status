@@ -1,3 +1,37 @@
-// Place all the styles related to the cars controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+#messages { height: 50px; }
+
+@mixin flash-message($color) {
+  text-align: center;
+  color: $color;
+  padding: 10px;
+  border: 1px solid $color;
+  border-radius: 5px;
+  margin: 0 auto 50px auto;
+  background-color: lighten($color, 45%)
+}
+
+.notice {
+  @include flash-message(green);
+}
+
+.alert {
+  @include flash-message(red);
+}
+
+.dismiss {
+  font-weight: bold;
+  color: white;
+  background-color: lighten(red, 30%);
+  float: right;
+  border-radius: 2px;
+  padding: 2px 5px;
+  margin-top: -2px;
+  &:hover {
+    background-color: red;
+    cursor: pointer;
+  }
+}
+
+.highlight {
+  background-color: lightyellow;
+}

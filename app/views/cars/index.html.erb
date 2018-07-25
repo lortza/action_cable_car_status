@@ -1,10 +1,11 @@
-<h1>Cars</h1>
+<h1>Car Inventory</h1>
 
 <div id="messages"></div>
 
 <table>
   <thead>
     <tr>
+      <th>ID</th>
       <th>Car</th>
       <th>Status</th>
       <th colspan="3">Manage</th>
@@ -14,8 +15,9 @@
   <tbody>
     <% @cars.each do |car| %>
       <tr>
+        <td>#<%= car.id %></td>
         <td><%= car.display %></td>
-        <td><%= car.status.display %></td>
+        <td id="<%= car.id %>"><%= car.status.with_id %></td>
         <td><%= link_to 'Show', car %></td>
         <td><%= link_to 'Edit', edit_car_path(car) %></td>
         <td><%= link_to 'Destroy', car, method: :delete, data: { confirm: 'Are you sure?' } %></td>
