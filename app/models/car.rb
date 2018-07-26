@@ -5,10 +5,10 @@ class Car < ApplicationRecord
   scope :ordered, -> { includes(:status, :color).order(:id) }
   # scope :ordered, -> { includes(:status, :color).order('statuses.number') }
 
-
- after_update do |car|
-   ActionCable.server.broadcast('status_notifications_channel', {status: car.status.with_id, car_id: car.id, krazy_message: "The #{car.display} is now #{car.status.display}."})
- end
+  def update_and_broadcast_status(car_params)
+    self.update!(car_params)
+    ActionCable.server.broadcast('status_notifications_channel', {status: self.status.with_id, car_id: self.id, krazy_message: "The #{self.display} is now #{self.status.display}." })
+  end
 
   def display
     "#{color.display} #{make} #{model}"

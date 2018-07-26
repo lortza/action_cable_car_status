@@ -9,7 +9,13 @@ Update the car status via the Rails Console and the status will appear on the Ca
 
 ## What it looks like
 
-![alt text](/public/screenshots/cars_index1.png "Screenshot")
+When a User 1 updates a record via the web app, it notifies all users if the car's `status` has changed:
+
+![alt text](/public/screenshots/controller_update.png "Screenshot")
+
+When an update to a car's `status` is made via the console, all users are notified.
+
+![alt text](/public/screenshots/console_update.png "Screenshot")
 
 
 ## Getting Started
@@ -27,12 +33,16 @@ rails server
 rails console
 ```
 
-2. Go to `localhost:3000`
+2. Go to `localhost:3000` in a browser tab and in an additional incognito window
 
-3. Update a car's status in the console and see the `cars#index` view change
+3. Edit a car via the web interface.
+
+4. See the normal notice in User 1's browser and the alert message in User 2's browser. Clear the alerts.
+
+5. Update a car's status in the console and see the both users' browsers receive the alert.
 
 ```ruby
 # rails console
 
-Car.first.update!(status_id: Status.first.id)
+Car.first.update_and_broadcast_status(status_id: Status.first.id)
 ```

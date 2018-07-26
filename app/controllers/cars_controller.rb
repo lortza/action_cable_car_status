@@ -40,15 +40,21 @@ class CarsController < ApplicationController
   # PATCH/PUT /cars/1
   # PATCH/PUT /cars/1.json
   def update
-    respond_to do |format|
-      if @car.update(car_params)
-        format.html { redirect_to cars_url, notice: "The #{@car.display} was successfully updated." }
-        format.json { render cars_url, status: :ok, location: @car }
-      else
-        format.html { render :edit }
-        format.json { render json: @car.errors, status: :unprocessable_entity }
+    if @car.status_id == car_params[:status_id].to_i
+      respond_to do |format|
+        if @car.update(car_params)
+          format.html { redirect_to cars_url, notice: "The #{@car.display} was successfully updated." }
+          format.json { render cars_url, status: :ok, location: @car }
+        else
+          format.html { render :edit }
+          format.json { render json: @car.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      @car.update_and_broadcast_status(car_params)
+      redirect_to cars_url, notice: "The #{@car.display} was successfully updated."
     end
+
   end
 
   # DELETE /cars/1
