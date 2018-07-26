@@ -9,11 +9,17 @@ Update the car status via the Rails Console and the status will appear on the Ca
 
 ## What it looks like
 
+### Controller updates
+
 When a User 1 updates a record via the web app, it notifies all users if the car's `status` has changed:
 
 ![alt text](/public/screenshots/controller_update.png "Screenshot")
 
+### Console Updates
+
 When an update to a car's `status` is made via the console, all users are notified.
+
+![alt text](/public/screenshots/console.png "Screenshot")
 
 ![alt text](/public/screenshots/console_update.png "Screenshot")
 
