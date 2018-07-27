@@ -71,16 +71,17 @@ class StatusNotificationsChannel < ApplicationCable::Channel
 end
 ```
 
-At some point, we need to initiate a broadcast and it _seems_ like the  `cars_controller` would be a good place for that. But knowing when and what to broadcast is not the `car_controller`'s job. All it cares about is passing data between the car views and data source. So we give it an object that already knows the broadcasting info, which lets the controller stick to its normal duties.
+At some point, we need to initiate a broadcast and it _seems_ like the `cars_controller` would be a good place for that. But knowing when and what to broadcast is not the `cars_controller`'s job. All it cares about is passing data between the car views and data source. So we give it an object that already knows the broadcasting info, which lets the controller stick to its normal duties.
 
 ```ruby
+# app/controllers/cars_controller.rb
+
 def update
   # Pass the @car and its updated params to the `CarWithBroadcast` class
   @car_with_broadcast = CarWithBroadcast.new(@car, car_params)
 
   respond_to do |format|
-    # And use that class's object just as we would have used the @car
-    # object under default circumstances
+    # And use that class's object just as we would have used the @car object under default circumstances
     if @car_with_broadcast.save
       format.html { redirect_to cars_url, notice: "The #{@car_with_broadcast.car.display} was successfully updated." }
       format.json { render cars_url, status: :ok, location: @car_with_broadcast.car }
@@ -109,8 +110,7 @@ class CarWithBroadcast
   def save
     if car.valid?
       car.save
-      # Here we broadcast a message to the `status_notifications_channel`
-      # via ActionCable's methods
+      # Here we broadcast a message to the `status_notifications_channel` via ActionCable's methods
       ActionCable.server.broadcast('status_notifications_channel', car.to_broadcast) if @status_changed
       true
     else
@@ -124,6 +124,7 @@ The `Car` class knows how it wants to talk about itself in a broadcast. Hence th
 
 ```ruby
 # app/models/car.rb
+
 class Car < ApplicationRecord
   ...
   def to_broadcast
@@ -140,7 +141,7 @@ class Car < ApplicationRecord
 end
 ```
 
-When the `status_notifications_channel` receives the data, we use jQuery to insert the HTML for the alert message.
+When the `status_notifications_channel` receives the broadcast data, we use jQuery to insert the HTML for the alert message.
 
 ```coffeescript
 # app/assets/javascripts/channels/status_notifications.coffee
@@ -158,14 +159,16 @@ App.status_notifications = App.cable.subscriptions.create "StatusNotificationsCh
 
 ```
 
-So why not use a `Car` model `after_update` callback instead of creating the `CarWithBroadcast` class? With a model callback, we're inextricably tied to having a broadcast happen _every_ time a `car` object is updated. The `CarWithBroadcast` class gives us the flexibility to choose where and when we want to broadcast.
+So why not use an `after_update` callback in the `Car` model instead of creating the `CarWithBroadcast` class? With a model callback, we're inextricably tied to having a broadcast happen _every_ time a `car` object is updated. The `CarWithBroadcast` class gives us the flexibility to choose where and when we want to broadcast.
 
 For example, updating a `car` in the console like this does not produce the alert,
 
-```bash
+```ruby
+# rails console
+
 Car.first.update!(status_id: 2)
 ```
 
-and that makes for a better user experience if you need to make changes to the production database and you don't need users to witness the whole process.
+and that makes for a better user experience if you need to make changes to the production database and you don't need users to witness the whole process. If we had used `after_update` the broadcast would have been sent -- and possibly without our realizing it.
 
 The `CarWithBroadcast` class is not a _perfect_ solution. It feels a little clunky and the naming seems a touch off. But it's the solution for right now and when the code grows, a better name and purpose may reveal itself.
