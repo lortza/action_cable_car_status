@@ -29,7 +29,7 @@ When an update to a car's `status` is made via the console, all users are notifi
 1. Start all of the services in separate terminal windows/tabs.
 
 ```ruby
-#redis
+# redis
 redis-server
 
 # rails server

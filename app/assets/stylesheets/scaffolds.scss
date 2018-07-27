@@ -1,7 +1,6 @@
 body {
-  background-color: #fff;
-  color: #333;
-  font-family: verdana, arial, helvetica, sans-serif;
+  color: white;
+  font-family: helvetica, sans-serif;
   font-size: 13px;
   line-height: 18px;
   margin: 33px;
@@ -21,16 +20,9 @@ pre {
 }
 
 a {
-  color: #000;
-
-  &:visited {
-    color: #666;
-  }
-
-  &:hover {
-    color: #fff;
-    background-color: #000;
-  }
+  color: lightblue;
+  &:visited { color: lightblue; }
+  &:hover { color: cyan; }
 }
 
 table {width: 100%}

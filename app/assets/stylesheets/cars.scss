@@ -1,3 +1,7 @@
+$cocoa: #4B473C;
+
+html { background-color: $cocoa; }
+
 #messages { height: 50px; }
 
 @mixin flash-message($color) {
@@ -33,5 +37,12 @@
 }
 
 .highlight {
-  background-color: lightyellow;
+  color: $cocoa;
+  background-color: lighten($cocoa, 40%);
+  // background-color: lightyellow;
+  a {
+    color: lightblue;
+    &:visited { color: $cocoa; }
+    &:hover { color: cyan; }
+  }
 }
