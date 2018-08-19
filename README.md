@@ -1,5 +1,7 @@
 # ActionCable Car Status Practice App
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/550dbb37f7e19d0060b6/maintainability)](https://codeclimate.com/github/lortza/action_cable_car_status/maintainability)
+
 This app tracks the status of vehicles on a car lot. It pushes updates to users' browsers via Action Cable when the `status_id` field of a car changes. It works both for browser-initiated and console-initiated updates (with the console as a stand-in for ETL-style db updates).
 
 When a user updates a car's status via the browser, they get the normal Rails notice and all other users get a jQuery alert via Action Cable. If an update happens via the console, all users get an alert via Action Cable.
